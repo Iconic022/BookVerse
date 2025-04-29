@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = '20'    // Change to your node version if needed
+        NODE_VERSION = '22'  // Updated to match your actual Node version
     }
 
     stages {
@@ -15,45 +15,30 @@ pipeline {
         stage('Set up Node') {
             steps {
                 script {
-                    // Install node using nvm or system (optional step based on Jenkins setup)
                     echo "Using Node.js version ${NODE_VERSION}"
+                    // Optional: Ensure correct Node version is used (if nvm or node tool plugin is available)
+                    // For example: tool name: 'NodeJS 22' if configured in Jenkins
                 }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                dir('project') {
-                    sh 'npm install'
-                }
+                sh 'npm install'
             }
         }
 
         stage('Build Project') {
             steps {
-                dir('project') {
-                    sh 'npm run build'
-                }
+                sh 'npm run build'
             }
         }
 
         stage('Archive Build Output') {
             steps {
-                dir('project') {
-                    archiveArtifacts artifacts: 'dist/**', fingerprint: true
-                }
+                archiveArtifacts artifacts: 'dist/**', fingerprint: true
             }
         }
-
-        // Optional - you can add a deploy stage if needed
-        /*
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-                // Your deploy commands here (like Docker push, SCP to server, etc.)
-            }
-        }
-        */
     }
 
     post {

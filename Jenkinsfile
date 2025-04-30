@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = '22'  // Updated to match your actual Node version
+        NODE_VERSION = '22'
     }
 
     stages {
@@ -16,8 +16,6 @@ pipeline {
             steps {
                 script {
                     echo "Using Node.js version ${NODE_VERSION}"
-                    // Optional: Ensure correct Node version is used (if nvm or node tool plugin is available)
-                    // For example: tool name: 'NodeJS 22' if configured in Jenkins
                 }
             }
         }

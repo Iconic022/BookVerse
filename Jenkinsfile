@@ -22,19 +22,25 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                dir('project') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Build Project') {
             steps {
-                sh 'npm run build'
+                dir('project') {
+                    sh 'npm run build'
+                }
             }
         }
 
         stage('Archive Build Output') {
             steps {
-                archiveArtifacts artifacts: 'dist/**', fingerprint: true
+                dir('project') {
+                    archiveArtifacts artifacts: 'dist/**', fingerprint: true
+                }
             }
         }
     }
